@@ -44,7 +44,7 @@ const HeroSection = () => {
 
 const Con = styled.div`  
     width: 100%;
-    height:80vh;  
+    height:100vh;   
     position: relative;
     background: url('/images/landing/herobg.svg') center no-repeat;
     background-size: cover;  
