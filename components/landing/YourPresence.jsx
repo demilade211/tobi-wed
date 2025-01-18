@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SectionTitle from '../common/SectionTitle';
 import TextBox from '../form-elements/TextBox';
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 const YourPresence = () => {
 
@@ -11,34 +12,36 @@ const YourPresence = () => {
     const guest = searchParams.get('guest')
 
     return (
-        <Con>
-            <SectionTitle title="Your Presence Means the World to Us" />
-            <p className='para'>Your presence means the world to us! As we celebrate with a close circle of loved ones, every seat holds a special place in our hearts. Kindly confirm your availability to help us plan this unforgettable evening just for you.</p>
-            <div className='form-row'>
-                <div className='left'>
-                    <img className="" src={`/images/landing/limg.svg`} alt="img" />
-                </div>
-                <FormCon>
-                    <h1 className='first-item'>Guest 1</h1>
-                    <TextBox label="First Name" />
-                    <TextBox label="Last Name" />
-                    <TextBox label="Email" classs='first-item' />
-
-                    {
-                        guest &&
-                        <>
-                            <h1 className='first-item'>Guest 1</h1>
-                            <TextBox label="First Name" />
-                            <TextBox label="Last Name" />
-                        </>
-                    }
-
-                    <div className='first-item flex justify-center mt-8'>
-                        <Btn>Confirm Attendance</Btn>
+        <Suspense>
+            <Con>
+                <SectionTitle title="Your Presence Means the World to Us" />
+                <p className='para'>Your presence means the world to us! As we celebrate with a close circle of loved ones, every seat holds a special place in our hearts. Kindly confirm your availability to help us plan this unforgettable evening just for you.</p>
+                <div className='form-row'>
+                    <div className='left'>
+                        <img className="" src={`/images/landing/limg.svg`} alt="img" />
                     </div>
-                </FormCon>
-            </div>
-        </Con>
+                    <FormCon>
+                        <h1 className='first-item'>Guest 1</h1>
+                        <TextBox label="First Name" />
+                        <TextBox label="Last Name" />
+                        <TextBox label="Email" classs='first-item' />
+
+                        {
+                            guest &&
+                            <>
+                                <h1 className='first-item'>Guest 1</h1>
+                                <TextBox label="First Name" />
+                                <TextBox label="Last Name" />
+                            </>
+                        }
+
+                        <div className='first-item flex justify-center mt-8'>
+                            <Btn>Confirm Attendance</Btn>
+                        </div>
+                    </FormCon>
+                </div>
+            </Con>
+        </Suspense>
     )
 }
 
