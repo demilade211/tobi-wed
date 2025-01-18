@@ -28,7 +28,7 @@ const HeroSection = () => {
                                 <h1 className='bottom'>Oluwatobiloba</h1>
                             </div>
 
-                            <p className='sub'>#ShadesofTee | 21st Febuary 2024 | #Lorem Ipsum</p>
+                            <p className='sub'>#ShadesofTee | 21st Febuary 2025 | #LammysCupofTee</p>
                             <Btn onClick={() => router.push(`/auth/register`)}> RSVP Now</Btn>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ const Con = styled.div`
                     }
                     .sub{
                         color: #000; 
-                        font-size: 20px;
+                        font-size: 18px;
                         font-style: normal;
                         font-weight: 300;
                         line-height: normal;
