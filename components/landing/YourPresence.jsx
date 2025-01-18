@@ -2,8 +2,14 @@ import React from 'react'
 import styled from 'styled-components';
 import SectionTitle from '../common/SectionTitle';
 import TextBox from '../form-elements/TextBox';
+import { useSearchParams } from 'next/navigation'
 
 const YourPresence = () => {
+
+    const searchParams = useSearchParams()
+
+    const guest = searchParams.get('guest')
+
     return (
         <Con>
             <SectionTitle title="Your Presence Means the World to Us" />
@@ -18,11 +24,14 @@ const YourPresence = () => {
                     <TextBox label="Last Name" />
                     <TextBox label="Email" classs='first-item' />
 
-                    <>
-                        <h1 className='first-item'>Guest 1</h1>
-                        <TextBox label="First Name" />
-                        <TextBox label="Last Name" />
-                    </>
+                    {
+                        guest &&
+                        <>
+                            <h1 className='first-item'>Guest 1</h1>
+                            <TextBox label="First Name" />
+                            <TextBox label="Last Name" />
+                        </>
+                    }
 
                     <div className='first-item flex justify-center mt-8'>
                         <Btn>Confirm Attendance</Btn>
