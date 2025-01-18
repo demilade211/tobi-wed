@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SectionTitle = ({title}) => {
     return (
         <Con>
-            <img className="" src={`/images/landing/to.svg`} alt="img" />
+            <img className="" src={`/images/landing/to.png`} alt="img" />
             <h1>{title}</h1>
             <img className="" src={`/images/landing/bo.svg`} alt="img" />
         </Con>

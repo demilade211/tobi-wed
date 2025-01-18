@@ -26,4 +26,4 @@ const Con = styled.div`
   margin: 0 auto; /* Centers the content */
 `;
 
-export default Home
+export default Home 

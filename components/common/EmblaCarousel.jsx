@@ -70,11 +70,11 @@ const EmblaCarousel = (props) => {
         <Con className="embla">
             <div className="embla__viewport" ref={emblaRef}>
                 <div className="embla__container">
-                    {slides.map((index) => (
+                    {slides.map((val,index) => (
                         <div className="embla__slide" key={index}>
                             <img
                                 className="embla__slide__img"
-                                src={`https://picsum.photos/600/350?v=${index}`}
+                                src={`${val}`}
                                 alt="Your alt text"
                             />
                         </div>
