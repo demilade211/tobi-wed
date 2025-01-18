@@ -7,7 +7,8 @@ import OurStory from '@/components/landing/OurStory';
 import JoinUs from '@/components/landing/JoinUs';
 import YourPresence from '@/components/landing/YourPresence';
 import Gallery from '@/components/landing/Gallery';
-import { Suspense } from 'react'
+import { Suspense } from 'react' 
+import CountDown from '@/components/landing/CountDown';
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
         <JoinUs />
         <YourPresence />
         <Gallery />
+        <CountDown/>
       </Con>
     </Suspense>
   )
