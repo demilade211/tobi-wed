@@ -7,16 +7,19 @@ import OurStory from '@/components/landing/OurStory';
 import JoinUs from '@/components/landing/JoinUs';
 import YourPresence from '@/components/landing/YourPresence';
 import Gallery from '@/components/landing/Gallery';
+import { Suspense } from 'react'
 
 const Home = () => {
   return (
-    <Con>
-      <HeroSection />
-      <OurStory/>
-      <JoinUs/>
-      <YourPresence/>
-      <Gallery/>
-    </Con>
+    <Suspense>
+      <Con>
+        <HeroSection />
+        <OurStory />
+        <JoinUs />
+        <YourPresence />
+        <Gallery />
+      </Con>
+    </Suspense>
   )
 }
 
