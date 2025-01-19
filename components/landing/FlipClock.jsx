@@ -18,7 +18,7 @@ const StaticCard = ({ position, digit }) => (
 
 const FlipUnit = ({ digit, shuffle, unit }) => {
     let currentDigit = digit;
-    let previousDigit = digit - 1;
+    let previousDigit = digit + 1;
 
     if (unit !== 'hours') {
         previousDigit = previousDigit === -1 ? 59 : previousDigit;
@@ -52,20 +52,49 @@ const FlipUnit = ({ digit, shuffle, unit }) => {
 };
 
 const CalendarFlipCountdown = () => {
+    const [days, setDays] = useState(0);
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
+    const [shuffleDays, setShuffleDays] = useState(false);
     const [shuffleHours, setShuffleHours] = useState(false);
     const [shuffleMinutes, setShuffleMinutes] = useState(false);
     const [shuffleSeconds, setShuffleSeconds] = useState(false);
 
     useEffect(() => {
         const updateTime = () => {
-            const currentTime = new Date();
-            const currentHours = currentTime.getHours();
-            const currentMinutes = currentTime.getMinutes();
-            const currentSeconds = currentTime.getSeconds();
 
+            const calculateTimeLeft = () => {
+                const targetDate = new Date('2025-02-21T00:00:00');
+                const now = new Date();
+                const difference = targetDate - now;
+        
+                if (difference <= 0) {
+                    return {
+                        days: 0,
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                    };
+                }
+        
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / (1000 * 60)) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+        
+                return { days, hours, minutes, seconds };
+            };
+            const currentTime = new Date();
+            const currentDays = calculateTimeLeft().days
+            const currentHours = calculateTimeLeft().hours
+            const currentMinutes = calculateTimeLeft().minutes
+            const currentSeconds = calculateTimeLeft().seconds
+
+            if (currentDays !== days) {
+                setShuffleDays((prev) => !prev);
+                setDays(currentDays);
+            }
             if (currentHours !== hours) {
                 setShuffleHours((prev) => !prev);
                 setHours(currentHours);
@@ -83,10 +112,14 @@ const CalendarFlipCountdown = () => {
         const interval = setInterval(updateTime, 1000);
 
         return () => clearInterval(interval);
-    }, [hours, minutes, seconds]);
+    }, [days,hours, minutes, seconds]);
 
     return (
         <FlipClockContainer>
+            <Col>
+                <FlipUnit digit={days} shuffle={shuffleDays} unit="days" />
+                <CardTitle>Days</CardTitle>
+            </Col>
             <Col>
                 <FlipUnit digit={hours} shuffle={shuffleHours} unit="hours" />
                 <CardTitle>Hours</CardTitle>
@@ -149,10 +182,9 @@ const Col = styled.div`
 const FlipClockContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: calc(3 * 140px + 80px);
+  width: calc(4 * 140px + 80px);
   @media (max-width: 1200px) {
-    width: calc(3 * 90px + 20px); /* Reduce unit size and spacing for smaller screens */
-    
+    width: calc(4 * 90px + 20px); /* Reduce unit size and spacing for smaller screens */
   }
 `;
 

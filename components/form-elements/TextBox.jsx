@@ -83,13 +83,12 @@ const GreyInput = styled.input`
     background: #FFF; 
     border-radius: 10px;
     border: 1px solid #E0E0E0; 
-    color: #545454;
-    font-family: Poppins;
+    color: #545454; 
     font-size: 15px;
     font-style: normal;
     font-weight: 275;
     line-height: normal;
-    padding: 14px 28px;
+    padding: 14px 15px;
     outline: none;
     &:focus {
         border: 1px solid #974B00;;

@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import SectionTitle from '../common/SectionTitle';
 import TextBox from '../form-elements/TextBox';
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import MySnackBar from '@/components/MySnackBar';
+import { addGuest } from "@/services/guest"
+import catchErrors from '@/utils/catchErrors';
+import validateInput from '@/utils/validateInput';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const YourPresence = () => {
 
@@ -11,8 +16,71 @@ const YourPresence = () => {
 
     const guest = searchParams.get('guest')
 
+    const router = useRouter();
+    const [buttonDisabled, setButtonDisabled] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [snackInfo, setSnackInfo] = useState({ openSnack: false, type: "", message: "" })
+    const [user, setUser] = useState({
+        email: "",
+        firstName: "",
+        lastName: "",
+    })
+
+    const [guests, setGuests] = useState({
+        firstName: "",
+        lastName: "",
+    })
+
+    useEffect(() => {
+        const isComplete = Object.values(user).every(item => Boolean(item))//check if all is not empty
+        isComplete ? setButtonDisabled(false) : setButtonDisabled(true)
+    }, [user])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const form = new FormData();
+        form.set('email', user.email);
+        form.set('password', user.password);
+
+        setButtonDisabled(true)
+        setLoading(true)
+
+        if (validateInput(user, setSnackInfo, setButtonDisabled, setLoading)) {
+            try {
+                const response = await addGuest({...user,guest:guests})
+                setLoading(false)
+                setButtonDisabled(false)
+                const { success, message } = response
+                if (success) {
+                    setSnackInfo(prev => ({ ...prev, openSnack: true, type: "success", message: message }));
+                } else {
+                    setSnackInfo(prev => ({ ...prev, openSnack: true, type: "warning", message: catchErrors(response) }));
+                    setButtonDisabled(false);
+                    setLoading(false);
+
+                }
+            } catch (error) {
+                setLoading(false)
+                setButtonDisabled(false);
+                setSnackInfo(prev => ({ ...prev, openSnack: true, type: "error", message: catchErrors(error) }))
+            }
+        }
+
+    }
+    const handleChange = (e) => {
+        const { name, value } = e.target// takes the name and vale of event currently changing
+        setUser(prev => ({ ...prev, [name]: value }))
+    }
+
+    const handleGuestChange = (e) => {
+        const { name, value } = e.target// takes the name and vale of event currently changing
+        setGuests(prev => ({ ...prev, [name]: value }))
+    }
+
     return (
         <Con>
+            <MySnackBar setSnackInfo={setSnackInfo} snackInfo={snackInfo} />
             <SectionTitle title="Your Presence Means the World to Us" />
             <p className='para'>Your presence means the world to us! As we celebrate with a close circle of loved ones, every seat holds a special place in our hearts. Kindly confirm your availability to help us plan this unforgettable evening just for you.</p>
             <div className='form-row'>
@@ -21,21 +89,21 @@ const YourPresence = () => {
                 </div>
                 <FormCon>
                     <h1 className='first-item'>Guest 1</h1>
-                    <TextBox label="First Name" />
-                    <TextBox label="Last Name" />
-                    <TextBox label="Email" classs='first-item' />
+                    <TextBox label="First Name" placeholder="" type="text" onChange={handleChange} name="firstName" />
+                    <TextBox label="Last Name" type="text" onChange={handleChange} name="lastName" />
+                    <TextBox label="Email" classs='first-item' placeholder="" type="email" onChange={handleChange} name="email" />
 
                     {
                         guest &&
                         <>
                             <h1 className='first-item'>Guest 1</h1>
-                            <TextBox label="First Name" />
-                            <TextBox label="Last Name" />
+                            <TextBox label="First Name" type="text" onChange={handleGuestChange} name="firstName" />
+                            <TextBox label="Last Name" type="text" onChange={handleGuestChange} name="lastName" />
                         </>
                     }
 
                     <div className='first-item flex justify-center mt-8'>
-                        <Btn>Confirm Attendance</Btn>
+                        <Btn onClick={handleSubmit}   disabled={buttonDisabled}>{loading ? <CircularProgress size={20} color="inherit" /> : "Confirm Attendance"}</Btn>
                     </div>
                 </FormCon>
             </div>
