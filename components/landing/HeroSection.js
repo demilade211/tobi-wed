@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRouter, usePathname } from 'next/navigation'
 import Navbar from './Navbar';
 
-const HeroSection = () => {
+const HeroSection = ({ scrollToYourPresence }) => {
 
     const router = useRouter();
 
@@ -29,7 +29,7 @@ const HeroSection = () => {
                             </div>
 
                             <p className='sub'>#ShadesofTee | 21st Febuary 2025 | #LammysCupofTee</p>
-                            <Btn onClick={() => router.push(`/auth/register`)}> RSVP Now</Btn>
+                            <Btn onClick={scrollToYourPresence}> RSVP Now</Btn>
                         </div>
                     </div>
                 </div>

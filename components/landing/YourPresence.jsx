@@ -10,7 +10,7 @@ import catchErrors from '@/utils/catchErrors';
 import validateInput from '@/utils/validateInput';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const YourPresence = () => {
+const YourPresence = ({ref}) => {
 
     const searchParams = useSearchParams()
 
@@ -79,7 +79,7 @@ const YourPresence = () => {
     }
 
     return (
-        <Con>
+        <Con ref={ref}>
             <MySnackBar setSnackInfo={setSnackInfo} snackInfo={snackInfo} />
             <SectionTitle title="Your Presence Means the World to Us" />
             <p className='para'>Your presence means the world to us! As we celebrate with a close circle of loved ones, every seat holds a special place in our hearts. Kindly confirm your availability to help us plan this unforgettable evening just for you.</p>
@@ -96,7 +96,7 @@ const YourPresence = () => {
                     {
                         guest &&
                         <>
-                            <h1 className='first-item'>Guest 1</h1>
+                            <h1 className='first-item'>Guest 2</h1>
                             <TextBox label="First Name" type="text" onChange={handleGuestChange} name="firstName" />
                             <TextBox label="Last Name" type="text" onChange={handleGuestChange} name="lastName" />
                         </>

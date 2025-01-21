@@ -48,7 +48,7 @@ const Navbar = () => {
                 </div>
                 <div className="md:hidden">
                     <div className="mr-1">
-                        <img src="/images/landing/ham.svg" alt="img" onClick={() => setShowNav(!showNav)} />
+                        <img src="/images/landing/ham.svg" alt="img"   />
                     </div>
                 </div>
                 <div className={`mobile-nav ${showNav && "active"}`}>
