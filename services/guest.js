@@ -15,7 +15,7 @@ export const addGuest = async (data) => {
 
 // Get all user jobs
 export const getContractors = async (page) => { 
-    let items_per_page=10 
+    let items_per_page=100 
     try {
         const res = await axios.get(`/api/v1/guest`, {
             params: { page, items_per_page}
